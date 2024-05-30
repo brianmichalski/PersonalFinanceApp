@@ -78,7 +78,7 @@
                         </TabItem.Header>
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Cash Flow"
-                                               Style="{StaticResource WidgetTitle}"/>
+                                       Style="{StaticResource WidgetTitle}"/>
                             <wpf:WpfPlot Name="WpfPlot1">
                             </wpf:WpfPlot>
                         </DockPanel>
@@ -136,7 +136,6 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Date" Binding="{Binding DateTime, StringFormat=\{0:yyyy/MM/dd\}}"/>
                                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                                    <!--The Email property contains a URI.  For example "mailto:lucy0@adventure-works.com"-->
                                     <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}" />
                                     <DataGridTextColumn Header="Amount" Binding="{Binding Amount, StringFormat=C}">
                                         <DataGridTextColumn.ElementStyle>

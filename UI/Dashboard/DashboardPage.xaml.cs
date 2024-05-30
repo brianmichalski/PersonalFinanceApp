@@ -2,8 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using PersonalFinanceApp.Model;
-using System.Transactions;
 
 namespace PersonalFinanceApp.UI.Dashboard
 {

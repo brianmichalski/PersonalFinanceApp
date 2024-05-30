@@ -29,7 +29,7 @@
             <StackPanel Orientation="Vertical" Name="Actions">
                 <Button Content="Home" Name="BtnHome" Click="BtnHome_Click"/>
                 <Button Content="Transactions" Name="BtnTransactions" Click="BtnTransactions_Click"/>
-                <Button Content="Categories" Name="BtnCategories"/>
+                <Button Content="Categories" Name="BtnCategories" Click="BtnCategories_Click"/>
                 <Button Content="Import" Name="BtnImport"/>
                 <Button Content="Load Sample" Name="BtnLoadSample" Click="BtnLoadSample_Click"/>
             </StackPanel>
