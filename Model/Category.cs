@@ -2,12 +2,17 @@
 
 public class Category
 {
-	public string Name { get; set; }
-	public double Limit { get; set; }
-
-	public Category(string name, double limit)
-	{
-		Name = name;
-		Limit = limit;
-	}
+    public int CategoryId { get; set; }
+    public string Name { get; set; }
+    public double Limit { get; set; }
+    public Category? Parent { get; set; }
+    public Category(Category? parent, string name, double limit)
+    {
+        Parent = parent;
+        Name = name;
+        Limit = limit;
+    }
+    public Category(string name, double limit) : this(null, name, limit)
+    {
+    }
 }

@@ -37,4 +37,16 @@ public class TransactionService
 	public void Delete(Transaction transaction)
 	{
 	}
-}
+	public double GetCurrentBalance()
+    {
+        return 0.0;
+    }
+    public double GetBalance(DateOnly date)
+    {
+        return 0.0;
+    }
+    public Dictionary<int, double> GetBalanceByMonth(int year)
+    {
+        return new Dictionary<int, double>();
+    }
+  }
