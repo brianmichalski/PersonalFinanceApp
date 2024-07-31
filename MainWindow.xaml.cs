@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using PersonalFinanceApp.Util;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,11 @@ namespace PersonalFinanceApp
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ExcelUtils.Test();
         }
     }
 }
