@@ -7,13 +7,6 @@ namespace PersonalFinanceApp.Util;
 
 public abstract class ExcelUtils
 {
-
-    public static void Test()
-    {
-        string currentPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-        List<Transaction> transactions = ExcelUtils.LoadSpreadSheet("../../../Sample/sample_transactions.xlsx", true);
-    }
-
     public static List<Transaction> LoadSpreadSheet(string fileName, bool hasHeader)
     {
         List<Transaction> transactions = new List<Transaction>();
@@ -52,6 +45,7 @@ public abstract class ExcelUtils
                         row.RowIndex + 1));
                 }
                 Transaction transaction = new Transaction(
+                    new Category(category, 0),
                     description,
                     DateTime.FromOADate(double.Parse(date)),
                     expenseValue > 0 ? (expenseValue * -1) : incomeValue

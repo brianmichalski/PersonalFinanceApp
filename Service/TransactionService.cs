@@ -14,7 +14,7 @@ public class TransactionService
     {
 		return this.repository.FindAll();
     }
-    public Transaction Add(TransactionType type, string description, DateTime datetime, double amount)
+    public Transaction Add(TransactionType type, Category category, string description, DateTime datetime, double amount)
 	{
 		if (string.IsNullOrEmpty(description))
 		{
@@ -24,7 +24,7 @@ public class TransactionService
         {
             throw new ArgumentException("Value can not be equal to zero");
         }
-        Transaction transaction = new Transaction(description, datetime, amount);
+        Transaction transaction = new Transaction(category, description, datetime, amount);
 		transaction = this.repository.Save(transaction);
 		return transaction;
 	}

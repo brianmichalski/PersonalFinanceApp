@@ -3,11 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         xmlns:local="clr-namespace:PersonalFinanceApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowState="Maximized">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="119,82,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Margin" Value="1"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground"  Value="DarkBlue"/>
+                <Setter Property="BorderBrush"  Value="LightBlue"/>
+                <Setter Property="Cursor"  Value="Hand"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="Rectangle">
+                <Setter Property="Fill" Value="#99CCCCFF"/>
+            </Style>
+        </Grid.Resources>
+        <StackPanel Orientation="Horizontal" Name="Main" Margin="10">
+            <StackPanel Orientation="Vertical" Name="Actions">
+                <Button Content="Home" Name="BtnHome"/>
+                <Button Content="Transactions" Name="BtnTransactions"/>
+                <Button Content="Categories" Name="BtnCategories"/>
+                <Button Content="Import" Name="BtnImport"/>
+                <Button Content="Load Sample" Name="BtnLoadSample" Click="BtnLoadSample_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Name="GraphPanel">
+                    <wpf:WpfPlot Name="WpfPlot1" MinHeight="400" MinWidth="500">
 
+                    </wpf:WpfPlot>
+                    <wpf:WpfPlot Name="WpfPlot2" MinHeight="400" MinWidth="500">
+
+                    </wpf:WpfPlot>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
