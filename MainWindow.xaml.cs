@@ -2,10 +2,8 @@
 using PersonalFinance.Service;
 using PersonalFinance.Util;
 using ScottPlot;
-using ScottPlot.Plottables;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace PersonalFinance
 {
@@ -31,9 +29,6 @@ namespace PersonalFinance
             WpfPlot1.Plot.Axes.DateTimeTicksBottom();
             WpfPlot1.Plot.XLabel("Day");
             WpfPlot1.Plot.YLabel("Transaction value");
-            WpfPlot1.Plot.Title("Cash Flow");
-
-            WpfPlot2.Plot.Title("Expenses By Category");
             WpfPlot2.Plot.HideLegend();
             WpfPlot2.Plot.HideAxesAndGrid();
         }
