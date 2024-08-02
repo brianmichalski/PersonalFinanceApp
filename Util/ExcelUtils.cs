@@ -1,9 +1,8 @@
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using PersonalFinance.Model;
-using System.Reflection;
 
-namespace PersonalFinanceApp.Util;
+namespace PersonalFinance.Util;
 
 public abstract class ExcelUtils
 {

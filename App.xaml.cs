@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace PersonalFinanceApp
+namespace PersonalFinance
 {
     /// <summary>
     /// Interaction logic for App.xaml
