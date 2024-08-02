@@ -1,5 +1,6 @@
 ﻿using PersonalFinanceApp.Model;
 using PersonalFinanceApp.Service;
+using PersonalFinanceApp.UI.Categories;
 using PersonalFinanceApp.UI.Dashboard;
 using PersonalFinanceApp.UI.Transactions;
 using PersonalFinanceApp.Util;
@@ -44,6 +45,11 @@ namespace PersonalFinanceApp
         private void BtnTransactions_Click(object sender, RoutedEventArgs e)
         {
             this._navigationService.Navigate(new TransactionPage());
+        }
+
+        private void BtnCategories_Click(object sender, RoutedEventArgs e)
+        {
+            this._navigationService.Navigate(new CategoriesPage());
         }
     }
 }

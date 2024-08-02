@@ -8,7 +8,10 @@ public class CategoryRepository
 
     public CategoryRepository() 
     {
-        this._categories = new Dictionary<int, Category>(); 
+        this._categories = new Dictionary<int, Category>();
+        this.Save(new Category("Groceries", 1000));
+        this.Save(new Category("Transportation", 300));
+        this.Save(new Category("Leisure", 200));
     }
 
     public IEnumerable<Category> FindAll()
