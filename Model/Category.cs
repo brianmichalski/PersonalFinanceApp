@@ -1,4 +1,4 @@
-﻿namespace PersonalFinance.Model;
+﻿namespace PersonalFinanceApp.Model;
 
 public class Category
 {

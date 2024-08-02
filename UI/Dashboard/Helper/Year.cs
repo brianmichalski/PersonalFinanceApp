@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace PersonalFinance.UI.Dashboard.Helper
+namespace PersonalFinanceApp.UI.Dashboard.Helper
 {
 	public class Year : ObservableCollection<string>
 	{

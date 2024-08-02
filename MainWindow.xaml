@@ -1,11 +1,9 @@
-﻿<Window x:Class="PersonalFinance.MainWindow"
+﻿<Window x:Class="PersonalFinanceApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-        xmlns:local="clr-namespace:PersonalFinance"
-        xmlns:helper="clr-namespace:PersonalFinance.UI.Dashboard.Helper"
+        xmlns:local="clr-namespace:PersonalFinanceApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowState="Maximized">
@@ -26,146 +24,19 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <Style TargetType="Rectangle">
-                <Setter Property="Fill" Value="#99CCCCFF"/>
-            </Style>
         </Grid.Resources>
         <StackPanel Orientation="Horizontal" Name="Main" Margin="10">
             <StackPanel Orientation="Vertical" Name="Actions">
-                <Button Content="Home" Name="BtnHome"/>
-                <Button Content="Transactions" Name="BtnTransactions"/>
+                <Button Content="Home" Name="BtnHome" Click="BtnHome_Click"/>
+                <Button Content="Transactions" Name="BtnTransactions" Click="BtnTransactions_Click"/>
                 <Button Content="Categories" Name="BtnCategories"/>
                 <Button Content="Import" Name="BtnImport"/>
                 <Button Content="Load Sample" Name="BtnLoadSample" Click="BtnLoadSample_Click"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20,0">
-                <StackPanel.Resources>
-                    <Style x:Key="Widget" TargetType="{x:Type Control}">
-                        <Setter Property="Margin" Value="5,0,5,0"/>
-                    </Style>
-                    <Style x:Key="WidgetTitle" TargetType="{x:Type TextBlock}">
-                        <Setter Property="DockPanel.Dock" Value="Top"/>
-                        <Setter Property="Margin" Value="10"/>
-                        <Setter Property="FontSize" Value="12"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="TextAlignment" Value="Center"/>
-                    </Style>
-                    <Style TargetType="{x:Type wpf:WpfPlot}">
-                        <Setter Property="Margin" Value="10"/>
-                        <Setter Property="MaxHeight" Value="400"/>
-                        <Setter Property="MinHeight" Value="400"/>
-                        <Setter Property="MinWidth" Value="500"/>
-                    </Style>
-                    <Style TargetType="{x:Type DataGrid}">
-                        <Setter Property="Margin" Value="10"/>
-                        <Setter Property="AutoGenerateColumns" Value="False"/>
-                        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
-                        <Setter Property="MaxHeight" Value="400"/>
-                        <Setter Property="MinHeight" Value="400"/>
-                        <Setter Property="MinWidth" Value="500"/>
-                    </Style>
-                </StackPanel.Resources>
-                <StackPanel Orientation="Horizontal" Margin="20">
-                    <StackPanel.Resources>
-                        <helper:Year x:Key="years"/>
-                        <helper:Month x:Key="months"/>
-                        <Style x:Key="FilterControl" TargetType="{x:Type Control}">
-                            <Setter Property="Margin" Value="5,0,5,0"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <ComboBox Name="ComboBoxYear"
-                              ItemsSource="{StaticResource years}"
-                              Text="Year"
-                              IsEditable="true"
-                              IsReadOnly="true"
-                              Style="{StaticResource FilterControl}">
-                    </ComboBox>
-                    <ComboBox Name="ComboBoxMonth"
-                              ItemsSource="{StaticResource months}"
-                              Text="Month"
-                              IsEditable="true"
-                              IsReadOnly="true"
-                              Style="{StaticResource FilterControl}" >
-                    </ComboBox>
-                    <Button Content="Refresh" 
-                            Name="BtnRefreshDashboard" 
-                            Style="{StaticResource FilterControl}" Click="BtnRefreshDashboard_Click" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Name="GraphPanel">
-                    <TabControl Style="{StaticResource Widget}">
-                        <TabItem>
-                            <TabItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock>Graph</TextBlock>
-                                </StackPanel>
-                            </TabItem.Header>
-                            <DockPanel LastChildFill="True">
-                                <TextBlock Text="Cash Flow"
-                                           Style="{StaticResource WidgetTitle}"/>
-                                <wpf:WpfPlot Name="WpfPlot1">
-                                </wpf:WpfPlot>
-                            </DockPanel>
-                        </TabItem>
-                        <TabItem Header="Table">
-                            <DockPanel LastChildFill="True">
-                                <TextBlock Text="Cash Flow"
-                                           Style="{StaticResource WidgetTitle}"/>
-                                <DataGrid Name="DataGrid1" ItemsSource="{Binding}">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Date" Binding="{Binding DateTime, StringFormat=\{0:yyyy/MM/dd\}}"/>
-                                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                                        <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}" />
-                                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount, StringFormat=C}">
-                                            <DataGridTextColumn.ElementStyle>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="HorizontalAlignment" Value="Right" />
-                                                </Style>
-                                            </DataGridTextColumn.ElementStyle>
-                                        </DataGridTextColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </DockPanel>
-                        </TabItem>
-                    </TabControl>
-                    <TabControl Style="{StaticResource Widget}">
-                        <TabItem>
-                            <TabItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock>Graph</TextBlock>
-                                </StackPanel>
-                            </TabItem.Header>
-                            <DockPanel LastChildFill="True">
-                                <TextBlock Text="Expenses by Category"
-                                           Style="{StaticResource WidgetTitle}"/>
-                                <wpf:WpfPlot Name="WpfPlot2">
-                                </wpf:WpfPlot>
-                            </DockPanel>
-                        </TabItem>
-                        <TabItem Header="Table">
-                            <DockPanel LastChildFill="True">
-                                <TextBlock Text="Expenses by Category"
-                                           Style="{StaticResource WidgetTitle}"/>
-                                <DataGrid Name="DataGrid2" ItemsSource="{Binding}">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Date" Binding="{Binding DateTime, StringFormat=\{0:yyyy/MM/dd\}}"/>
-                                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                                        <!--The Email property contains a URI.  For example "mailto:lucy0@adventure-works.com"-->
-                                        <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}" />
-                                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount, StringFormat=C}">
-                                            <DataGridTextColumn.ElementStyle>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="HorizontalAlignment" Value="Right" />
-                                                </Style>
-                                            </DataGridTextColumn.ElementStyle>
-                                        </DataGridTextColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </DockPanel>
-                        </TabItem>
-                    </TabControl>
-                </StackPanel>
-                <StackPanel Orientation="Vertical">
-                </StackPanel>
+                <DockPanel>
+                    <Frame x:Name="_NavigationFrame" NavigationUIVisibility="Hidden" />
+                </DockPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

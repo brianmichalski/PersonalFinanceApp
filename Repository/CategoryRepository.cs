@@ -1,6 +1,6 @@
-using PersonalFinance.Model;
+using PersonalFinanceApp.Model;
 
-namespace PersonalFinance.Repository;
+namespace PersonalFinanceApp.Repository;
 
 public class CategoryRepository
 {

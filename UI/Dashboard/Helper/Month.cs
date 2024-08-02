@@ -1,9 +1,7 @@
-using DocumentFormat.OpenXml.Drawing.Diagrams;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Text;
 
-namespace PersonalFinance.UI.Dashboard.Helper
+namespace PersonalFinanceApp.UI.Dashboard.Helper
 {
 	public class Month : ObservableCollection<string>
     {

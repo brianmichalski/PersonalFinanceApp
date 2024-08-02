@@ -1,7 +1,7 @@
-using PersonalFinance.Model;
-using PersonalFinance.Repository;
+using PersonalFinanceApp.Model;
+using PersonalFinanceApp.Repository;
 
-namespace PersonalFinance.Service;
+namespace PersonalFinanceApp.Service;
 
 public class TransactionService
 {
