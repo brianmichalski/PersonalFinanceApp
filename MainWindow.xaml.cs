@@ -24,6 +24,18 @@ namespace PersonalFinance
             this.transactionService = new TransactionService();
             this.ComboBoxYear.SelectedItem = DateTime.Now.Year.ToString();
             this.ComboBoxMonth.SelectedItem = DateTime.Now.ToString("MMMM").ToUpper();
+
+            var legend = WpfPlot1.Plot.ShowLegend();
+            legend.Location = Alignment.UpperRight;
+
+            WpfPlot1.Plot.Axes.DateTimeTicksBottom();
+            WpfPlot1.Plot.XLabel("Day");
+            WpfPlot1.Plot.YLabel("Transaction value");
+            WpfPlot1.Plot.Title("Cash Flow");
+
+            WpfPlot2.Plot.Title("Expenses By Category");
+            WpfPlot2.Plot.HideLegend();
+            WpfPlot2.Plot.HideAxesAndGrid();
         }
 
         private void BtnLoadSample_Click(object sender, RoutedEventArgs e)
@@ -77,13 +89,6 @@ namespace PersonalFinance
             incomeLine.Label = "Income";
             expenseLine.Label = "Expense";
 
-            var legend = WpfPlot1.Plot.ShowLegend();
-            legend.Location = Alignment.UpperRight;
-
-            WpfPlot1.Plot.Axes.DateTimeTicksBottom();
-            WpfPlot1.Plot.XLabel("Day");
-            WpfPlot1.Plot.YLabel("Transaction value");
-            WpfPlot1.Plot.Title("Cash Flow");
             WpfPlot1.Plot.Axes.AutoScale();
             WpfPlot1.Refresh();
 
@@ -99,12 +104,17 @@ namespace PersonalFinance
             List<PieSlice> slices = new();
             int count = 0;
             double othersTotal = 0;
-            Color[] colors = [Colors.Red, Colors.Orange, Colors.Gold, Colors.Green, Colors.Blue];
+            Color[] colors = [Colors.Red, Colors.Orange, Colors.Purple, Colors.Green, Colors.Blue];
             foreach (var item in expensesCategories)
             {
                 if (count < 5)
                 {
-                    slices.Add(new PieSlice() { Value = item.Total, Label = item.Label, FillColor = colors[count] });
+                    slices.Add(new PieSlice() { 
+                        Value = item.Total, 
+                        Label = item.Label, 
+                        LabelFontSize = 14,
+                        FillColor = colors[count]
+                    });
                 }
                 else
                 {
@@ -112,13 +122,19 @@ namespace PersonalFinance
                 }
                 count++;
             }
-            slices.Add(new PieSlice() { Value = othersTotal, Label = "Others", FillColor = Colors.Yellow });
+            slices.Add(new PieSlice() { 
+                Value = othersTotal, 
+                Label = "Others",
+                LabelFontSize = 14,
+                FillColor = Colors.Yellow 
+            });
 
             var pie = WpfPlot2.Plot.Add.Pie(slices);
+            pie.ShowSliceLabels = true;
+            pie.LineColor = Colors.White;
+            pie.SliceLabelDistance = 1.1;
             pie.DonutFraction = 0.5;
 
-            WpfPlot2.Plot.ShowLegend();
-            WpfPlot2.Plot.Title("Expenses By Category");
             WpfPlot2.Plot.Axes.AutoScale();
             WpfPlot2.Refresh();
 

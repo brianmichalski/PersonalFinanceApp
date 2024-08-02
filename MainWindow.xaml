@@ -39,6 +39,11 @@
                 <Button Content="Load Sample" Name="BtnLoadSample" Click="BtnLoadSample_Click"/>
             </StackPanel>
             <StackPanel Orientation="Vertical">
+                <StackPanel.Resources>
+                    <Style x:Key="Widget" TargetType="{x:Type Control}">
+                        <Setter Property="Margin" Value="5,0,5,0"/>
+                    </Style>
+                </StackPanel.Resources>
                 <StackPanel Orientation="Horizontal" Margin="20">
                     <StackPanel.Resources>
                         <helper:Year x:Key="years"/>
@@ -66,7 +71,7 @@
                             Style="{StaticResource FilterControl}" Click="BtnRefreshDashboard_Click" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Name="GraphPanel">
-                    <TabControl>
+                    <TabControl Style="{StaticResource Widget}">
                         <TabItem>
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
@@ -101,7 +106,7 @@
                             </StackPanel>
                         </TabItem>
                     </TabControl>
-                    <TabControl>
+                    <TabControl Style="{StaticResource Widget}">
                         <TabItem>
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
