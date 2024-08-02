@@ -9,7 +9,73 @@
       Title="Page1">
 
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="60,60,0,0" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <Grid.Resources>
+            <Style x:Key="Title" TargetType="{x:Type TextBlock}">
+                <Setter Property="DockPanel.Dock" Value="Top"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="TextAlignment" Value="Left"/>
+            </Style>
+            <Style TargetType="{x:Type DataGrid}">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid Grid.Row="0">
+            <DockPanel LastChildFill="True">
+                <StackPanel Orientation="Vertical" Background="AliceBlue">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type FrameworkElement}">
+                            <Setter Property="Margin" Value="5,0,5,0"/>
+                        </Style>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type FrameworkElement}}">
+                            <Setter Property="Padding" Value="5,0,5,0"/>
+                        </Style>
+                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+                    </StackPanel.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Transactions"
+                               Style="{StaticResource Title}"/>
+                        <Button x:Name="BtnNewTransaction" Content="New Transaction" Click="BtnNewTransaction_Click"></Button>
+                    </StackPanel>
+                    <StackPanel x:Name="PanelEdit" Orientation="Horizontal" Margin="10">
+                        <Label Content="Date:"></Label>
+                        <TextBox x:Name="txtBoxDate" MinWidth="80"></TextBox>
+                        <Label Content="Description:"></Label>
+                        <TextBox x:Name="txtBoxDescription" MinWidth="180"></TextBox>
+                        <Label Content="Amount:"></Label>
+                        <TextBox x:Name="txtBoxAmount" MinWidth="80"></TextBox>
+                        <Label Content="Category:"></Label>
+                        <ComboBox MinWidth="100">
+                            <ComboBoxItem>Parent</ComboBoxItem>
+                        </ComboBox>
+                        <Button Name="btnSave" Content="Save" Click="btnSave_Click"></Button>
+                        <Button Name="btnCancel" Content="Cancel" Click="btnCancel_Click"></Button>
+                    </StackPanel>
+                    <DataGrid Name="DataGrid" ItemsSource="{Binding}" HorizontalAlignment="Stretch">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" Binding="{Binding DateTime, StringFormat=\{0:yyyy/MM/dd\}}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                            <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}" />
+                            <DataGridTextColumn Header="Amount" Binding="{Binding Amount, StringFormat=C}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
     </Grid>
 </Page>
