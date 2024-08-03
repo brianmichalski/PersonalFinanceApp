@@ -13,8 +13,14 @@ public class Database
 
 	public void Save<T>(IEnumerable<T> data)
     {
+        string fileName = GetFileName<T>();
+        if (data == null || data.Count() == 0)
+        {
+            File.Delete(fileName);
+            return;
+        }
         XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-        using (TextWriter textWriter = new StreamWriter(GetFileName<T>()))
+        using (TextWriter textWriter = new StreamWriter(fileName))
         {
             serializer.Serialize(textWriter, new List<T>(data));
         }
@@ -28,8 +34,20 @@ public class Database
             return null;
         }
         XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-        FileStream databaseFileStream = new FileStream(GetFileName<T>(), FileMode.Open);
-        return (List<T>?) serializer.Deserialize(databaseFileStream);
+        FileStream databaseFileStream = null;
+        List<T> result = null;
+        try
+        {
+            databaseFileStream = new FileStream(GetFileName<T>(), FileMode.Open);
+            result = (List<T>?)serializer.Deserialize(databaseFileStream);
+        }
+        finally
+        {
+            if (databaseFileStream != null) {
+                databaseFileStream.Close();
+            }
+        }
+        return result;
     }
 
     private string GetFileName<T>()
