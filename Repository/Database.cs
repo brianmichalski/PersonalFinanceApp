@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -16,7 +17,7 @@ public class Database
         string fileName = GetFileName<T>();
         if (data == null || data.Count() == 0)
         {
-            File.Delete(fileName);
+            this.DeleteDatabase<T>();
             return;
         }
         XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
@@ -50,8 +51,22 @@ public class Database
         return result;
     }
 
+    public void DeleteDatabase<T>()
+    {
+        string fileName = GetFileName<T>();
+        if (File.Exists(fileName))
+        {
+            File.Delete(fileName);
+        }
+    }
+
     private string GetFileName<T>()
     {
-        return string.Format("{0}.xml", typeof(T).Name);
+        return string.Format("{0}\\{1}.xml", DefaultPath(), typeof(T).Name);
+    }
+
+    private string DefaultPath()
+    {
+        return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
     }
 }

@@ -42,13 +42,19 @@
                                Style="{StaticResource Title}"/>
                         <Button x:Name="BtnLoadFile" Content="Load file..." Click="BtnLoadFile_Click"></Button>
                     </StackPanel>
-                    <StackPanel x:Name="PanelEdit" Orientation="Horizontal" Margin="10">
-                        <Label Content="File:"></Label>
-                        <TextBox x:Name="txtBoxFileName" 
+                    <StackPanel Orientation="Vertical" Margin="10">
+                        <DockPanel>
+                            <Label Content="File:"></Label>
+                            <TextBox x:Name="txtBoxFileName" 
                                  IsReadOnly="True"
                                  MinWidth="400"></TextBox>
-                        <CheckBox x:Name="checkBoxHeader">My file has header</CheckBox>
-                        <Button Name="btnImport" Content="Import" Click="btnImport_Click"></Button>
+                            <CheckBox x:Name="checkBoxHeader">My file has header</CheckBox>
+                            <Button Name="btnImport" Content="Import" Click="btnImport_Click"></Button>
+                        </DockPanel>
+                        <DockPanel Margin="10, 100">
+                            <CheckBox x:Name="checkBoxSureDelete">I am sure</CheckBox>
+                            <Button Name="btnDeleteDatabase" Content="Clear ALL data" Click="btnDeleteDatabase_Click"></Button>
+                        </DockPanel>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>

@@ -26,11 +26,17 @@ namespace PersonalFinanceApp.Service
                     }
                     else
                     {
-                        transaction.Category = categoryService.Save(transaction.Category, i+1 == transactions.Count());
+                        transaction.Category = categoryService.Save(transaction.Category, true);
                     }
                     transactionService.Save(transaction, i+1 == transactions.Count());
                 }
             }
+        }
+
+        public void DeleteDatabase()
+        {
+            Database.Instance.DeleteDatabase<Model.Transaction>();
+            Database.Instance.DeleteDatabase<Model.Category>();
         }
     }
 }

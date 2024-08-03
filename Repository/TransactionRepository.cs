@@ -10,19 +10,24 @@ public class TransactionRepository
 
     private TransactionRepository()
     {
-        IEnumerable<Transaction> _transactions = Database.Instance.Restore<Transaction>();
-        if (_transactions != null && _transactions.Count() > 0)
-        {
-            this.transactions = _transactions.ToDictionary(k => k.TransactionId, v => v);
-        }
+        this.LoadDatabase();
         if (this.transactions == null)
         {
             this.transactions = new Dictionary<int, Transaction>();
         }
     }
+    private void LoadDatabase()
+    {
+        IEnumerable<Transaction> _transactions = Database.Instance.Restore<Transaction>();
+        if (_transactions != null && _transactions.Count() > 0)
+        {
+            this.transactions = _transactions.ToDictionary(k => k.TransactionId, v => v);
+        }
+    }
 
     public IEnumerable<Transaction> FindAll()
     {
+        this.LoadDatabase();
         return this.transactions.Values;
     }
 

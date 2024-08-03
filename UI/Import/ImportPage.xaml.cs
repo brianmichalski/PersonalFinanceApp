@@ -61,5 +61,26 @@ namespace PersonalFinanceApp.UI.Import
                 }
             }
         }
+
+        private void btnDeleteDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSureDelete.IsChecked == true)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show(
+                    "This procedure will ERASE all existing data",
+                    "Confirm clear database?",
+                    MessageBoxButton.YesNo);
+
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    ImportService importService = new ImportService();
+                    importService.DeleteDatabase();
+                    MessageBox.Show("Database is empty", "Done");
+                }
+            } else
+            {
+                MessageBox.Show("Select the confirmation checkbox", "Confirmation pending");
+            }
+        }
     }
 }

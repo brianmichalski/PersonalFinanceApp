@@ -10,19 +10,25 @@ public class CategoryRepository
 
     private CategoryRepository() 
     {
-        IEnumerable<Category> _categories = Database.Instance.Restore<Category>();
-        if (_categories != null && _categories.Count() > 0)
-        {
-            this.categories = _categories.ToDictionary(k => k.CategoryId, v => v);
-        }
+        this.LoadDatabase();
         if (this.categories == null)
         {
             this.categories= new Dictionary<int, Category>();
         }
     }
 
+    private void LoadDatabase()
+    {
+        IEnumerable<Category> _categories = Database.Instance.Restore<Category>();
+        if (_categories != null && _categories.Count() > 0)
+        {
+            this.categories = _categories.ToDictionary(k => k.CategoryId, v => v);
+        }
+    }
+
     public IEnumerable<Category> FindAll()
     {
+        this.LoadDatabase();
         return this.categories.Values;
     }
 
