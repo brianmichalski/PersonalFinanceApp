@@ -26,6 +26,12 @@ public class CategoryRepository
         return this.categories.Values;
     }
 
+    public Category? FindByName(string name)
+    {
+        return this.categories.Values.ToList().Find(c => 
+            c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+    }
+
     private int GetNextId()
     {
         if (this.categories.Count() == 0)
@@ -37,7 +43,7 @@ public class CategoryRepository
             .Last();
     }
 
-    public Category Save(Category category)
+    public Category Save(Category category, bool persist = true)
     {
         if (category.CategoryId > 0)
         {
@@ -47,7 +53,10 @@ public class CategoryRepository
             category.CategoryId = lastId;
             this.categories.Add(lastId, category);
         }
-        Database.Instance.Save<Category>(this.categories.Values);
+        if (persist)
+        {
+            Database.Instance.Save<Category>(this.categories.Values);
+        }
 
         return category;
     }

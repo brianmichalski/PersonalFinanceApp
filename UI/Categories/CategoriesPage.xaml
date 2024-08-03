@@ -29,7 +29,7 @@
             </Style>
         </Grid.Resources>
 
-        <Grid Grid.Row="0" Background="AliceBlue">
+        <Grid Grid.Row="0">
             <DockPanel LastChildFill="True">
                 <StackPanel Orientation="Vertical">
                     <StackPanel.Resources>

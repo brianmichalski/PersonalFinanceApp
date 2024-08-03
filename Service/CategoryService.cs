@@ -14,7 +14,13 @@ public class CategoryService
     {
 		return this.repository.FindAll();
     }
-    public Category Save(Category category)
+
+	public Category FindByName(string Name)
+	{
+		return this.repository.FindByName(Name);
+    }
+
+    public Category Save(Category category, bool persist = true)
 	{
 		if (string.IsNullOrEmpty(category.Name))
 		{
@@ -24,7 +30,7 @@ public class CategoryService
         {
             throw new ArgumentException("Limit can not be less than zero");
         }
-        category = this.repository.Save(category);
+        category = this.repository.Save(category, persist);
 		return category;
 	}
 

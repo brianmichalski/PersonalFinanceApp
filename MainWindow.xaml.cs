@@ -2,6 +2,7 @@
 using PersonalFinanceApp.Service;
 using PersonalFinanceApp.UI.Categories;
 using PersonalFinanceApp.UI.Dashboard;
+using PersonalFinanceApp.UI.Import;
 using PersonalFinanceApp.UI.Transactions;
 using PersonalFinanceApp.Util;
 using System.Windows;
@@ -54,6 +55,11 @@ namespace PersonalFinanceApp
         private void BtnCategories_Click(object sender, RoutedEventArgs e)
         {
             this._navigationService.Navigate(new CategoriesPage());
+        }
+
+        private void BtnImport_Click(object sender, RoutedEventArgs e)
+        {
+            this._navigationService.Navigate(new ImportPage());
         }
     }
 }

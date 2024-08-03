@@ -30,7 +30,7 @@
                 <Button Content="Home" Name="BtnHome" Click="BtnHome_Click"/>
                 <Button Content="Transactions" Name="BtnTransactions" Click="BtnTransactions_Click"/>
                 <Button Content="Categories" Name="BtnCategories" Click="BtnCategories_Click"/>
-                <Button Content="Import" Name="BtnImport"/>
+                <Button Content="Import" Name="BtnImport" Click="BtnImport_Click"/>
                 <Button Content="Load Sample" Name="BtnLoadSample" Click="BtnLoadSample_Click"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20,0">

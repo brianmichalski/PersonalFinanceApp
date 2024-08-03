@@ -37,7 +37,7 @@ public class TransactionRepository
             .Last();
     }
 
-    public Transaction Save(Transaction transaction)
+    public Transaction Save(Transaction transaction, bool persist = true)
     {
         if (transaction.TransactionId > 0)
         {
@@ -47,7 +47,10 @@ public class TransactionRepository
             transaction.TransactionId = lastId;
             this.transactions.Add(lastId, transaction);
         }
-        Database.Instance.Save<Transaction>(this.transactions.Values);
+        if (persist)
+        {
+            Database.Instance.Save<Transaction>(this.transactions.Values);
+        }
 
         return transaction;
     }

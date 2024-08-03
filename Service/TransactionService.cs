@@ -14,7 +14,7 @@ public class TransactionService
     {
 		return this.repository.FindAll();
     }
-    public Transaction Save(Transaction transaction)
+    public Transaction Save(Transaction transaction, bool persist = true)
     {
         if (transaction.Category == null)
         {
@@ -28,7 +28,7 @@ public class TransactionService
         {
             throw new ArgumentException("Value can not be equal to zero");
         }
-        transaction = this.repository.Save(transaction);
+        transaction = this.repository.Save(transaction, persist);
 		return transaction;
 	}
 
