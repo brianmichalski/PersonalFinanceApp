@@ -26,6 +26,7 @@
                 <Setter Property="AutoGenerateColumns" Value="False"/>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
                 <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="MaxHeight" Value="600"/>
             </Style>
         </Grid.Resources>
 

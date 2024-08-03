@@ -30,12 +30,13 @@
                 <Setter Property="AutoGenerateColumns" Value="False"/>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
                 <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="MaxHeight" Value="600"/>
             </Style>
         </Grid.Resources>
 
         <Grid Grid.Row="0">
             <DockPanel LastChildFill="True">
-                <StackPanel Orientation="Vertical" Background="AliceBlue">
+                <StackPanel Orientation="Vertical">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type FrameworkElement}">
                             <Setter Property="Margin" Value="5,0,5,0"/>
