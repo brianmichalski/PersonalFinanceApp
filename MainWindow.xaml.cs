@@ -23,8 +23,12 @@ namespace PersonalFinanceApp
             InitializeComponent();
             this._navigationService = _NavigationFrame.NavigationService;
             this._transactionService = new TransactionService();
-            this._dashboardPage = new DashboardPage(null);
-            _NavigationFrame.Navigate(this._dashboardPage);
+            this.LoadHome();
+        }
+        private void LoadHome()
+        {
+            this._navigationService.Navigate(new DashboardPage(
+                this._transactionService.FindAll()));
         }
 
         private void BtnLoadSample_Click(object sender, RoutedEventArgs e)
@@ -39,8 +43,7 @@ namespace PersonalFinanceApp
 
         private void BtnHome_Click(object sender, RoutedEventArgs e)
         {
-            this._navigationService.Navigate(new DashboardPage(
-                this._transactionService.FindAll()));
+            this.LoadHome();
         }
 
         private void BtnTransactions_Click(object sender, RoutedEventArgs e)

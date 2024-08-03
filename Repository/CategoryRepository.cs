@@ -10,10 +10,15 @@ public class CategoryRepository
 
     private CategoryRepository() 
     {
-        this.categories = new Dictionary<int, Category>();
-        this.Save(new Category("Groceries", 1000));
-        this.Save(new Category("Transportation", 300));
-        this.Save(new Category("Leisure", 200));
+        IEnumerable<Category> _categories = Database.Instance.Restore<Category>();
+        if (_categories != null && _categories.Count() > 0)
+        {
+            this.categories = _categories.ToDictionary(k => k.CategoryId, v => v);
+        }
+        if (this.categories == null)
+        {
+            this.categories= new Dictionary<int, Category>();
+        }
     }
 
     public IEnumerable<Category> FindAll()
@@ -42,6 +47,8 @@ public class CategoryRepository
             category.CategoryId = lastId;
             this.categories.Add(lastId, category);
         }
+        Database.Instance.Save<Category>(this.categories.Values);
+
         return category;
     }
     public void Delete(Category category)

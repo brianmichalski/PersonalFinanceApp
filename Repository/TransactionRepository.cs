@@ -5,26 +5,34 @@ namespace PersonalFinanceApp.Repository;
 public class TransactionRepository
 {
     private static TransactionRepository instance = new TransactionRepository();
-    private Dictionary<int, Transaction> _transactions;
+    private Dictionary<int, Transaction> transactions;
     public static TransactionRepository Instance { get => instance; }
 
-    private TransactionRepository() 
+    private TransactionRepository()
     {
-        this._transactions = new Dictionary<int, Transaction>(); 
+        IEnumerable<Transaction> _transactions = Database.Instance.Restore<Transaction>();
+        if (_transactions != null && _transactions.Count() > 0)
+        {
+            this.transactions = _transactions.ToDictionary(k => k.TransactionId, v => v);
+        }
+        if (this.transactions == null)
+        {
+            this.transactions = new Dictionary<int, Transaction>();
+        }
     }
 
     public IEnumerable<Transaction> FindAll()
     {
-        return this._transactions.Values;
+        return this.transactions.Values;
     }
 
     private int GetNextId()
     {
-        if (this._transactions.Count() == 0)
+        if (this.transactions.Count() == 0)
         {
             return 1;
         }
-        return 1 + this._transactions
+        return 1 + this.transactions
             .Keys
             .Last();
     }
@@ -33,20 +41,22 @@ public class TransactionRepository
     {
         if (transaction.TransactionId > 0)
         {
-            this._transactions[transaction.TransactionId] = transaction;
+            this.transactions[transaction.TransactionId] = transaction;
         } else { 
             int lastId = this.GetNextId();
             transaction.TransactionId = lastId;
-            this._transactions.Add(lastId, transaction);
+            this.transactions.Add(lastId, transaction);
         }
+        Database.Instance.Save<Transaction>(this.transactions.Values);
+
         return transaction;
     }
     public void Delete(Transaction transaction)
     {
-        if (!this._transactions.ContainsKey(transaction.TransactionId))
+        if (!this.transactions.ContainsKey(transaction.TransactionId))
         {
             throw new InvalidOperationException("The transaction provided is not in the database");
         }
-        this._transactions?.Remove(transaction.TransactionId);
+        this.transactions?.Remove(transaction.TransactionId);
     }
 }
