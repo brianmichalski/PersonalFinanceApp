@@ -15,4 +15,6 @@ public class Category
     public Category(string name, double limit) : this(null, name, limit)
     {
     }
+    public Category(): this("", 0) { 
+    }
 }

@@ -4,28 +4,31 @@ namespace PersonalFinanceApp.Repository;
 
 public class CategoryRepository
 {
-    private Dictionary<int, Category> _categories;
+    private static CategoryRepository instance = new CategoryRepository();
+    private Dictionary<int, Category> categories;
 
-    public CategoryRepository() 
+    private CategoryRepository() 
     {
-        this._categories = new Dictionary<int, Category>();
+        this.categories = new Dictionary<int, Category>();
         this.Save(new Category("Groceries", 1000));
         this.Save(new Category("Transportation", 300));
         this.Save(new Category("Leisure", 200));
     }
 
+    public static CategoryRepository Instance { get => instance; }
+
     public IEnumerable<Category> FindAll()
     {
-        return this._categories.Values;
+        return this.categories.Values;
     }
 
     private int GetNextId()
     {
-        if (this._categories.Count() == 0)
+        if (this.categories.Count() == 0)
         {
             return 1;
         }
-        return 1 + this._categories
+        return 1 + this.categories
             .Keys
             .Last();
     }
@@ -34,12 +37,20 @@ public class CategoryRepository
     {
         if (category.CategoryId > 0)
         {
-            this._categories[category.CategoryId] = category;
+            this.categories[category.CategoryId] = category;
         } else { 
             int lastId = this.GetNextId();
             category.CategoryId = lastId;
-            this._categories.Add(lastId, category);
+            this.categories.Add(lastId, category);
         }
         return category;
+    }
+    public void Delete(Category category)
+    {
+        if (!this.categories.ContainsKey(category.CategoryId))
+        {
+            throw new InvalidOperationException("The category provided is not in the database");
+        }
+        this.categories?.Remove(category.CategoryId);
     }
 }

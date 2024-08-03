@@ -25,6 +25,7 @@
                 <Setter Property="Margin" Value="10"/>
                 <Setter Property="AutoGenerateColumns" Value="False"/>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
             </Style>
         </Grid.Resources>
 
@@ -52,13 +53,23 @@
                         <Label Content="Limit:"></Label>
                         <TextBox x:Name="txtBoxLimit" MinWidth="80"></TextBox>
                         <Label Content="Parent:"></Label>
-                        <ComboBox MinWidth="200">
-                            <ComboBoxItem>Parent</ComboBoxItem>
+                        <ComboBox Name="comboBoxParent"
+                                  MinWidth="200"
+                                  ItemsSource="{Binding Categories}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Button Name="btnSave" Content="Save" Click="btnSave_Click"></Button>
                         <Button Name="btnCancel" Content="Cancel" Click="btnCancel_Click"></Button>
                     </StackPanel>
-                    <DataGrid Name="DataGrid" ItemsSource="{Binding}" HorizontalAlignment="Stretch">
+                    <DataGrid Name="DataGrid" 
+                              ItemsSource="{Binding}" 
+                              HorizontalAlignment="Stretch">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="Parent" Binding="{Binding Parent.Name}" />
@@ -69,6 +80,20 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Tag="{Binding}" Click="EditRow_Click">Edit</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Tag="{Binding}" Click="DeleteRow_Click">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

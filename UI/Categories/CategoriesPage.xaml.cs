@@ -1,19 +1,7 @@
 ﻿using PersonalFinanceApp.Service;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PersonalFinanceApp.UI.Categories
 {
@@ -23,32 +11,111 @@ namespace PersonalFinanceApp.UI.Categories
     public partial class CategoriesPage : Page
     {
         private CategoryService _categoryService;
-        private IEnumerable<Model.Category> _categories;
+        public ObservableCollection<Model.Category>? Categories { get; set; }
+        public Model.Category? Category { get; set; }
+
         public CategoriesPage()
         {
             InitializeComponent();
+
             this._categoryService = new CategoryService();
-            this._categories = this._categoryService.FindAll();
+            this.LoadCategories();
+            this.Category = new Model.Category();
+
+            DataContext = this;
+
             PanelEdit.Visibility = Visibility.Collapsed;
-            DataGrid.DataContext = new ObservableCollection<Model.Category>(this._categories);
+        }
+
+        private void LoadCategories()
+        {
+            this.Categories = new ObservableCollection<Model.Category>(this._categoryService.FindAll());
+            if (this.Categories != null)
+            {
+                DataGrid.DataContext = new ObservableCollection<Model.Category>(this.Categories);
+            }
         }
 
         private void BtnNewCategory_Click(object sender, RoutedEventArgs e)
         {
+            this.Category = new Model.Category();
+            this.Category.CategoryId = 0;
+            txtBoxName.Text = "";
+            txtBoxLimit.Text = "";
+            comboBoxParent.SelectedItem = null;
+
             PanelEdit.Visibility = Visibility.Visible;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            this._categoryService.Add(null, txtBoxName.Text, double.Parse(txtBoxLimit.Text));
-            this._categories = this._categoryService.FindAll();
-            DataGrid.DataContext = new ObservableCollection<Model.Category>(this._categories);
+            bool limitValid = double.TryParse(txtBoxLimit.Text, out double limit);
+            if (!limitValid)
+            {
+                MessageBox.Show("Provide a valid limit number", "Validation Error");
+                txtBoxLimit.Focus();
+                return;
+            }
+            if (comboBoxParent.SelectedValue != null)
+            {
+                var Parent = (Model.Category)comboBoxParent.SelectedValue;
+                if (Parent.CategoryId == Category.CategoryId)
+                {
+                    MessageBox.Show("The category can not be its own parent", "Validation Error");
+                    comboBoxParent.Focus();
+                    return;
+                }
+                this.Category.Parent = (Model.Category)comboBoxParent.SelectedValue;
+            }
+            else
+            {
+                this.Category.Parent = null;
+            }
+
+            this.Category.Name = txtBoxName.Text;
+            this.Category.Limit = double.Parse(txtBoxLimit.Text);
+
+            this._categoryService.Save(this.Category);
+            this.LoadCategories();
             PanelEdit.Visibility = Visibility.Collapsed;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            this.Category = new Model.Category();
+            this.LoadCategories();
             PanelEdit.Visibility = Visibility.Collapsed;
+        }
+
+        private void EditRow_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = (Button)e.OriginalSource;
+            var category = (Model.Category)btn.DataContext;
+
+            this.Category = new Model.Category();
+            this.Category.CategoryId = category.CategoryId;
+
+            txtBoxName.Text = category.Name;
+            txtBoxLimit.Text = category.Limit.ToString();
+            comboBoxParent.SelectedItem = category.Parent;
+
+            PanelEdit.Visibility = Visibility.Visible;
+        }
+
+        private void DeleteRow_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult messageBoxResult = MessageBox.Show(
+                "Are you sure?",
+                "Delete Confirmation",
+                System.Windows.MessageBoxButton.YesNo);
+
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                var btn = (Button)e.OriginalSource;
+                var category = (Model.Category)btn.DataContext;
+                this._categoryService.Delete(category);
+                this.LoadCategories();
+            }
         }
     }
 }

@@ -8,33 +8,28 @@ public class CategoryService
 	private CategoryRepository repository;
 	public CategoryService()
 	{
-		this.repository = new CategoryRepository();
+		this.repository = CategoryRepository.Instance;
     }
     public IEnumerable<Category> FindAll()
     {
 		return this.repository.FindAll();
     }
-    public Category Add(Category parent, string name, double limit)
+    public Category Save(Category category)
 	{
-		if (string.IsNullOrEmpty(name))
+		if (string.IsNullOrEmpty(category.Name))
 		{
 			throw new ArgumentNullException("Name can not be empty");
         }
-        if (limit < 0)
+        if (category.Limit < 0)
         {
             throw new ArgumentException("Limit can not be less than zero");
         }
-        Category Category = new Category(parent, name, limit);
-		Category = this.repository.Save(Category);
-		return Category;
+        category = this.repository.Save(category);
+		return category;
 	}
 
-	public void Edit(Category Category)
+	public void Delete(Category category)
 	{
-        this.repository.Save(Category);
-    }
-
-	public void Delete(Category Category)
-	{
+		this.repository.Delete(category);
 	}
 }
