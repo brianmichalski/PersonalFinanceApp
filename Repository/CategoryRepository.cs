@@ -58,5 +58,6 @@ public class CategoryRepository
             throw new InvalidOperationException("The category provided is not in the database");
         }
         this.categories?.Remove(category.CategoryId);
+        Database.Instance.Save<Category>(this.categories.Values);
     }
 }
