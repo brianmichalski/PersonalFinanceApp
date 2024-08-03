@@ -39,7 +39,8 @@ namespace PersonalFinanceApp
 
         private void BtnHome_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not implemented");
+            this._navigationService.Navigate(new DashboardPage(
+                this._transactionService.FindAll()));
         }
 
         private void BtnTransactions_Click(object sender, RoutedEventArgs e)
