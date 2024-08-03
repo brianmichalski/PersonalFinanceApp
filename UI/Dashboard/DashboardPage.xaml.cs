@@ -52,6 +52,7 @@ namespace PersonalFinanceApp.UI.Dashboard
             IEnumerable<Model.Transaction> monthTransactions = from transaction in transactions
                                                          where transaction.DateTime.Month == month
                                                          && transaction.DateTime.Year == year
+                                                         orderby transaction.DateTime
                                                          select transaction;
 
             IEnumerable<Model.Transaction> monthIncomes = from transaction in monthTransactions
