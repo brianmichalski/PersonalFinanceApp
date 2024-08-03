@@ -20,4 +20,5 @@ public class Transaction
         this.DateTime = dateTime;
         this.Amount = amount;
     }
+    public Transaction() { }
 }

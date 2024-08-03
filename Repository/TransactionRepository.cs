@@ -4,9 +4,11 @@ namespace PersonalFinanceApp.Repository;
 
 public class TransactionRepository
 {
+    private static TransactionRepository instance = new TransactionRepository();
     private Dictionary<int, Transaction> _transactions;
+    public static TransactionRepository Instance { get => instance; }
 
-    public TransactionRepository() 
+    private TransactionRepository() 
     {
         this._transactions = new Dictionary<int, Transaction>(); 
     }
@@ -38,5 +40,13 @@ public class TransactionRepository
             this._transactions.Add(lastId, transaction);
         }
         return transaction;
+    }
+    public void Delete(Transaction transaction)
+    {
+        if (!this._transactions.ContainsKey(transaction.TransactionId))
+        {
+            throw new InvalidOperationException("The transaction provided is not in the database");
+        }
+        this._transactions?.Remove(transaction.TransactionId);
     }
 }

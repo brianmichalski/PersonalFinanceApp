@@ -8,24 +8,27 @@ public class TransactionService
 	private TransactionRepository repository;
 	public TransactionService()
 	{
-		this.repository = new TransactionRepository();
+		this.repository = TransactionRepository.Instance;
     }
     public IEnumerable<Transaction> FindAll()
     {
 		return this.repository.FindAll();
     }
-    public Transaction Add(TransactionType type, Category category, string description, DateTime datetime, double amount)
-	{
-		if (string.IsNullOrEmpty(description))
+    public Transaction Save(Transaction transaction)
+    {
+        if (transaction.Category == null)
+        {
+            throw new ArgumentException("A Category must be provided");
+        }
+        if (string.IsNullOrEmpty(transaction.Description))
 		{
 			throw new ArgumentNullException("Description can not be empty");
         }
-        if (amount == 0)
+        if (transaction.Amount == 0)
         {
             throw new ArgumentException("Value can not be equal to zero");
         }
-        Transaction transaction = new Transaction(category, description, datetime, amount);
-		transaction = this.repository.Save(transaction);
+        transaction = this.repository.Save(transaction);
 		return transaction;
 	}
 
@@ -36,6 +39,7 @@ public class TransactionService
 
 	public void Delete(Transaction transaction)
 	{
+        this.repository.Delete(transaction);
 	}
 	public double GetCurrentBalance()
     {
