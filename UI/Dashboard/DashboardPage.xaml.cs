@@ -116,13 +116,16 @@ namespace PersonalFinanceApp.UI.Dashboard
                 }
                 count++;
             }
-            slices.Add(new PieSlice()
+            if (othersTotal > 0)
             {
-                Value = othersTotal,
-                Label = "Others",
-                LabelFontSize = 14,
-                FillColor = Colors.Yellow
-            });
+                slices.Add(new PieSlice()
+                {
+                    Value = othersTotal,
+                    Label = "Others",
+                    LabelFontSize = 14,
+                    FillColor = Colors.Yellow
+                });
+            }
 
             var pie = WpfPlot2.Plot.Add.Pie(slices);
             pie.ShowSliceLabels = true;
