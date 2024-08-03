@@ -73,17 +73,23 @@ namespace PersonalFinanceApp.UI.Categories
             }
 
             this.Category.Name = txtBoxName.Text;
-            this.Category.Limit = double.Parse(txtBoxLimit.Text);
+            this.Category.Limit = limit;
 
-            this._categoryService.Save(this.Category);
-            this.LoadCategories();
-            PanelEdit.Visibility = Visibility.Collapsed;
+            try
+            {
+                this._categoryService.Save(this.Category);
+                this.LoadCategories();
+
+                PanelEdit.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Validation Error");
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Category = new Model.Category();
-            this.LoadCategories();
             PanelEdit.Visibility = Visibility.Collapsed;
         }
 

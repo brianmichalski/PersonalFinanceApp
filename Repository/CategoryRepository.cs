@@ -6,6 +6,7 @@ public class CategoryRepository
 {
     private static CategoryRepository instance = new CategoryRepository();
     private Dictionary<int, Category> categories;
+    public static CategoryRepository Instance { get => instance; }
 
     private CategoryRepository() 
     {
@@ -14,8 +15,6 @@ public class CategoryRepository
         this.Save(new Category("Transportation", 300));
         this.Save(new Category("Leisure", 200));
     }
-
-    public static CategoryRepository Instance { get => instance; }
 
     public IEnumerable<Category> FindAll()
     {
