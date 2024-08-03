@@ -18,7 +18,7 @@ namespace PersonalFinanceApp.UI.Transactions
         private ObservableCollection<Model.Transaction> Transactions { get; set; } 
         public Model.Transaction? Transaction { get; set; }
 
-        private const string DATE_FORMAT = "yyyy-mm-dd";
+        private const string DATE_FORMAT = "yyyy-MM-dd";
 
         public TransactionPage()
         {
