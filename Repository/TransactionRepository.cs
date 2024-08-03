@@ -58,6 +58,5 @@ public class TransactionRepository
             throw new InvalidOperationException("The transaction provided is not in the database");
         }
         this.transactions?.Remove(transaction.TransactionId);
-        Database.Instance.Save<Transaction>(this.transactions.Values);
     }
 }
